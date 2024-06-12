@@ -189,7 +189,7 @@ https://public.cyber.mil/pki-pke/pkipke-document-library/
 
 This command will obviously have to be updated as Cyber.mil continuously releases new bundles and moves them around on their website:
 ```bash
-wget https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/certificates_pkcs7_DoD.zip && unzip certificates_pkcs7_DoD.zip
+wget https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/unclass-certificates_pkcs7_DoD.zip && unzip unclass-certificates_pkcs7_DoD.zip
 ```
 
 # FireFox
@@ -218,20 +218,22 @@ If you need to manually add the security device do the following:
 
 ## Import DoD Certificates
 
-Install the certificates from the mentioned zip-file in this order, by going to Edit -> Preference -> Advanced -> Certificates -> View Certificates -> Authorities -> Import (make sure to at-least check the box for "Trust this CA to identify websites"):
+Install the certificates from the mentioned zip-file in this order, by going to Edit -> Preference -> Advanced -> Certificates -> View Certificates -> Authorities -> Import File 1 below (make sure to at-least check the box for "Trust this CA to identify websites"):
 
-Note: As of the 5.7 version of the certificate zip
-1. Certificates_PKCS7_v5.7_DoD.der.p7b
+Note: As of the 5.13 version of the certificate zip
+1. certificates_pkcs7_v5.13_dod.der.p7b
 
-2. Certificates_PKCS7_v5.7_DoD_DoD_Root_CA_2.der.p7b
+2. certificates_pkcs7_v5.13_dod_DoD_Root_CA_3.der.p7b
 
-3. Certificates_PKCS7_v5.7_DoD_DoD_Root_CA_3.der.p7b
+3. certificates_pkcs7_v5.13_dod_DoD_Root_CA_4.der.p7b
 
-4. Certificates_PKCS7_v5.7_DoD_DoD_Root_CA_4.der.p7b
+4. certificates_pkcs7_v5.13_dod_DoD_Root_CA_5.der.p7b
 
-5. Certificates_PKCS7_v5.7_DoD_DoD_Root_CA_5.der.p7b
+5. certificates_pkcs7_v5.13_dod_DoD_Root_CA_6.der.p7b
 
-6. Certificates_PKCS7_v5.7_DoD.pem.p7b
+6. dod_pke_chain.pem
+
+You should not have to import files 2-6 and if attempted should give an error.
 
 Firefox is now ready to use.
 
@@ -310,13 +312,13 @@ To not recieve an untrusted error when connecting to the horizon server, we need
 Move to the directory you extracted the DoD certs to.
 
 ```
-cd Certificates_PKCS7_v5.9_DoD
+cd certificates_pkcs7_v5_13_dod
 ```
 
 Use openssl to convert the pkcs bundle to a single pem file
 
 ```
-openssl pkcs7 -print_certs -in Certificates_PKCS7_v5.9_DoD.pem.p7b -out dod_bundle.pem
+openssl pkcs7 -in certificates_pkcs7_v5_13_dod_der.p7b -inform der -print_certs -out dod_bundle.pem
 ```
 Use awk to split the pem file into individual crt files
 
